@@ -16,12 +16,6 @@ type ControlField struct {
 	Data    string   `xml:",chardata"`
 }
 
-// type ControlField struct {
-// 	XMLName xml.Name `xml:"controlfield"`
-// 	Tag     string   `xml:"tag,attr"`
-// 	Data    string   `xml:",chardata"`
-// }
-
 // ControlField.String returns the ControlField as a string.
 func (cf *ControlField) String() string {
 	return fmt.Sprintf("%s %s", cf.Tag, cf.Data)
@@ -60,12 +54,6 @@ type SubField struct {
 	Value   string   `xml:",chardata"`
 }
 
-// type SubField struct {
-// 	XMLName xml.Name `xml:"subfield"`
-// 	Code    byte     `xml:"code,attr"`
-// 	Value   string   `xml:",chardata"`
-// }
-
 // SubField.String returns the subfield as a string.
 func (sf SubField) String() string {
 	return fmt.Sprintf("(%c) %s", sf.Code, sf.Value)
@@ -80,16 +68,6 @@ type DataField struct {
 	Ind2      byte       `xml:"ind2,attr"`
 	SubFields []SubField `xml:"subfield"`
 }
-
-// DataField represents a variable data field, containing a tag, two
-// single-byte indicators, and one or more subfields.
-// type DataField struct {
-// 	XMLName   xml.Name `xml:"datafield"`
-// 	Tag       string   `xml:"tag,attr"`
-// 	Ind1      byte     `xml:"ind1,attr"`
-// 	Ind2      byte     `xml:"ind2,attr"`
-// 	SubFields []SubField
-// }
 
 // DataField.GetTag returns the tag for a DataField.
 func (df *DataField) GetTag() string {

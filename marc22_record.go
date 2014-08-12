@@ -65,14 +65,6 @@ type RecordXML struct {
 	DataFields    []DataField    `xml:"datafield"`
 }
 
-// RecordXML represents a MARCXML record, with a root element named 'record'.
-// type RecordXML struct {
-// 	XMLName xml.Name `xml:"record"`
-// 	Leader  string   `xml:"leader"`
-// 	ControlFields  []ControlField
-// 	DataFields []DataField
-// }
-
 // Record.XML writes a MARCXML representation of the record.
 func (record *Record) XML(writer io.Writer) (err error) {
 	xmlrec := &RecordXML{Leader: record.LeaderParsed.String(), ControlFields: record.ControlFields, DataFields: record.DataFields}
@@ -80,24 +72,6 @@ func (record *Record) XML(writer io.Writer) (err error) {
 	writer.Write(output)
 	return
 }
-
-// Record represents a MARC21 record, consisting of a leader and a number of
-// fields.
-// type Record struct {
-// 	XMLName xml.Name `xml:"record"`
-// 	Leader  *Leader  `xml:"leader"`
-// 	ControlFields  []ControlField
-// 	DataFields []DataField
-// }
-
-// Record represents a MARC21 record, consisting of a leader and a number of
-// fields.
-// type Record struct {
-// 	XMLName xml.Name `xml:"record"`
-// 	Leader  *Leader  `xml:"leader"`
-// 	ControlFields  []ControlField `xml:"record>controlfield"`
-// 	DataFields []DataField `xml:"record>datafield"`
-// }
 
 type Record struct {
 	XMLName       xml.Name `xml:"record"`
