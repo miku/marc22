@@ -50,23 +50,23 @@ func read_control(reader io.Reader, dent *dirent) (field *ControlField, err erro
 // associated data.
 type SubField struct {
 	XMLName xml.Name `xml:"subfield"`
-	Code    byte     `xml:"code,attr"`
+	Code    string   `xml:"code,attr"`
 	Value   string   `xml:",chardata"`
 }
 
 // SubField.String returns the subfield as a string.
 func (sf SubField) String() string {
-	return fmt.Sprintf("(%c) %s", sf.Code, sf.Value)
+	return fmt.Sprintf("(%s) %s", sf.Code, sf.Value)
 }
 
 // DataField represents a variable data field, containing a tag, two
 // single-byte indicators, and one or more subfields.
 type DataField struct {
-	XMLName   xml.Name   `xml:"datafield"`
-	Tag       string     `xml:"tag,attr"`
-	Ind1      byte       `xml:"ind1,attr"`
-	Ind2      byte       `xml:"ind2,attr"`
-	SubFields []SubField `xml:"subfield"`
+	XMLName   xml.Name    `xml:"datafield"`
+	Tag       string      `xml:"tag,attr"`
+	Ind1      string      `xml:"ind1,attr"`
+	Ind2      string      `xml:"ind2,attr"`
+	SubFields []*SubField `xml:"subfield"`
 }
 
 // DataField.GetTag returns the tag for a DataField.
@@ -80,7 +80,7 @@ func (df DataField) String() string {
 	for _, sf := range df.SubFields {
 		subfields = append(subfields, "["+sf.String()+"]")
 	}
-	return fmt.Sprintf("%s [%c%c] %s", df.Tag, df.Ind1, df.Ind2,
+	return fmt.Sprintf("%s [%s%s] %s", df.Tag, df.Ind1, df.Ind2,
 		strings.Join(subfields, ", "))
 }
 
@@ -102,14 +102,14 @@ func read_data(reader io.Reader, dent *dirent) (field *DataField, err error) {
 	}
 
 	df := &DataField{Tag: dent.tag}
-	df.Ind1, df.Ind2 = data[0], data[1]
+	df.Ind1, df.Ind2 = string(data[0]), string(data[1])
 
 	df.SubFields = make([]SubField, 0, 1)
 	for _, sfbytes := range bytes.Split(data[2:dent.length-1], []byte{DELIM}) {
 		if len(sfbytes) == 0 {
 			continue
 		}
-		sf := SubField{Code: sfbytes[0], Value: string(sfbytes[1:])}
+		sf := &SubField{Code: string(sfbytes[0]), Value: string(sfbytes[1:])}
 		df.SubFields = append(df.SubFields, sf)
 	}
 
