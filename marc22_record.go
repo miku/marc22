@@ -117,8 +117,8 @@ func (record Record) GetDataFields(tag string) (fields []DataField) {
 
 // Record.GetSubFields returns a slice of subfields that match the given tag
 // and code.
-func (record Record) GetSubFields(tag string, code byte) (subfields []SubField) {
-	subfields = make([]SubField, 0, 4)
+func (record Record) GetSubFields(tag string, code string) (subfields []*SubField) {
+	subfields = make([]*SubField, 0, 4)
 	fields := record.GetDataFields(tag)
 	for _, field := range fields {
 		for _, subfield := range field.SubFields {

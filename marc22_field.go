@@ -104,7 +104,7 @@ func read_data(reader io.Reader, dent *dirent) (field *DataField, err error) {
 	df := &DataField{Tag: dent.tag}
 	df.Ind1, df.Ind2 = string(data[0]), string(data[1])
 
-	df.SubFields = make([]SubField, 0, 1)
+	df.SubFields = make([]*SubField, 0, 1)
 	for _, sfbytes := range bytes.Split(data[2:dent.length-1], []byte{DELIM}) {
 		if len(sfbytes) == 0 {
 			continue
