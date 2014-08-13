@@ -9,7 +9,7 @@ MARCXML, whereas marc21 can only write XML.
 marc21 uses a `[]Field` interface slice to hold both control and data fields, which
 will prevent [XML parsing](http://golang.org/src/pkg/encoding/xml/read.go#L345).
 
-See: http://golang.org/src/pkg/encoding/xml/read.go#L345:
+See http://golang.org/src/pkg/encoding/xml/read.go#L345:
 
 ```golang
 ...
