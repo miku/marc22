@@ -19,11 +19,11 @@
 /*
 Package marc22 reads and writes MARC21 bibliographic catalogue records.
 
-This package is an experimental fork of [marc21](https://github.com/miku/marc21).
+This package is an experimental fork of https://github.com/miku/marc21.
 The main difference for now is that marc22 will be able to read MARC from
-MARCXML, whereas marc21 can only write XML.
+MARCXML, whereas marc21 can currently only write XML.
 
-Usage is straightforward. For [example](http://play.golang.org/p/mnn6UggTHa),
+Usage is straightforward. Example on the playground: http://play.golang.org/p/mnn6UggTHa.
 
 	marcfile, err := os.Open("somedata.mrc")
 	record, err := marc22.ReadRecord(marcfile)
